@@ -1,0 +1,1029 @@
+<!DOCTYPE html>
+<html lang="en" class="dark scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Michelle Obama Digital Archive & Learning Portal</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        sun: {
+                            300: '#FFE082',
+                            400: '#FFD54F',
+                            500: '#FFC72C',
+                            600: '#FDB813',
+                            700: '#F59E0B'
+                        },
+                        royal: {
+                            800: '#1E3A8A',
+                            900: '#0A192F',
+                            950: '#030C1B'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- FontAwesome & Google Fonts -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,700;0,800;1,400&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            background-color: #030C1B;
+            color: #F3F4F6;
+            font-family: 'Inter', sans-serif;
+        }
+        h1, h2, h3, .font-serif {
+            font-family: 'Playfair Display', serif;
+        }
+        .yellow-glow {
+            box-shadow: 0 0 20px rgba(253, 184, 19, 0.25);
+        }
+        .yellow-glow-hover:hover {
+            box-shadow: 0 0 25px rgba(253, 184, 19, 0.4);
+            border-color: #FFC72C;
+        }
+        .blue-glow {
+            box-shadow: 0 0 20px rgba(30, 58, 138, 0.4);
+        }
+        .text-gradient-sun {
+            background: linear-gradient(135deg, #FFF9C4 0%, #FFC72C 50%, #F59E0B 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .glass-panel {
+            background: rgba(10, 25, 47, 0.85);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(253, 184, 19, 0.2);
+        }
+        .glass-card {
+            background: rgba(15, 33, 64, 0.65);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(253, 184, 19, 0.15);
+            transition: all 0.3s ease;
+        }
+        .glass-card:hover {
+            border-color: rgba(253, 184, 19, 0.5);
+            transform: translateY(-3px);
+        }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #030C1B; }
+        ::-webkit-scrollbar-thumb { background: #FDB81355; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #FDB81399; }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between selection:bg-sun-500 selection:text-royal-950">
+
+    <!-- Ambient Glowing Background Dynamics -->
+    <div class="fixed top-[-10%] left-[-10%] w-[40vw] h-[40vw] rounded-full bg-sun-600/10 blur-[140px] pointer-events-none z-0"></div>
+    <div class="fixed top-[40%] right-[-10%] w-[45vw] h-[45vw] rounded-full bg-royal-800/30 blur-[150px] pointer-events-none z-0"></div>
+
+    <!-- MAIN APP WRAPPER -->
+    <div class="relative z-10 flex flex-col min-h-screen">
+
+        <!-- TOP BAR & BRANDING HEADER -->
+        <header class="sticky top-0 z-40 w-full glass-panel border-b border-sun-500/20 px-4 lg:px-8 py-3.5">
+            <div class="max-w-7xl mx-auto flex items-center justify-between">
+                
+                <!-- Brand Title & Seal -->
+                <a href="#" class="flex items-center space-x-3 group">
+                    <div class="w-11 h-11 rounded-full bg-gradient-to-br from-sun-400 via-sun-500 to-sun-700 flex items-center justify-center text-royal-950 font-black text-xl shadow-lg group-hover:scale-105 transition-transform border border-sun-300">
+                        <i class="fa-solid fa-crown"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-base sm:text-lg font-bold tracking-wider text-white flex items-center gap-2">
+                            MICHELLE OBAMA <span class="text-gradient-sun font-serif text-xs sm:text-sm">ARCHIVE</span>
+                        </h1>
+                        <p class="text-[10px] text-sun-400/90 font-medium tracking-widest uppercase">Empowerment • Education • Public Leadership</p>
+                    </div>
+                </a>
+
+                <!-- Search Input & Quick Controls -->
+                <div class="flex items-center space-x-3">
+                    <div class="relative hidden sm:flex items-center bg-royal-950/90 border border-sun-500/30 rounded-full px-3.5 py-1.5 w-64 md:w-80 focus-within:border-sun-400 transition-all">
+                        <i class="fa-solid fa-magnifying-glass text-sun-400/80 text-xs mr-2"></i>
+                        <input id="globalSearchInput" type="text" oninput="handleGlobalSearch(this.value)" placeholder="Search books, speeches, initiatives..." class="bg-transparent text-xs text-white placeholder-gray-400 focus:outline-none w-full">
+                    </div>
+
+                    <button onclick="toggleMobileMenu()" class="lg:hidden px-3 py-1.5 rounded-xl bg-sun-500/20 text-sun-300 border border-sun-500/40 text-xs font-bold hover:bg-sun-500/30 transition-all flex items-center gap-2">
+                        <i class="fa-solid fa-bars"></i> Menu
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- TOP HERO QUOTE CAROUSEL (15+ INSPIRATIONAL QUOTES) -->
+        <section class="max-w-7xl w-full mx-auto px-4 lg:px-8 mt-6">
+            <div class="glass-panel rounded-3xl p-6 sm:p-8 border border-sun-500/30 relative overflow-hidden yellow-glow">
+                
+                <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-4 border-b border-sun-500/20 pb-3">
+                    <div class="flex items-center gap-2">
+                        <span class="px-3 py-0.5 rounded-full bg-sun-500/20 text-sun-300 border border-sun-500/40 text-[10px] font-bold uppercase tracking-widest">
+                            <i class="fa-solid fa-sparkles mr-1"></i> Daily Wisdom & Vision
+                        </span>
+                        <span id="quoteIndexIndicator" class="text-xs font-mono text-gray-400">(1/15)</span>
+                    </div>
+
+                    <div class="flex items-center space-x-2">
+                        <button onclick="prevQuote()" class="w-8 h-8 rounded-full bg-royal-950 border border-sun-500/30 text-sun-400 hover:bg-sun-500/20 flex items-center justify-center transition-all">
+                            <i class="fa-solid fa-chevron-left text-xs"></i>
+                        </button>
+                        <button onclick="toggleCarouselAutoplay()" id="autoplayBtn" class="px-2.5 py-1 rounded-full bg-royal-950 border border-sun-500/30 text-sun-400 hover:bg-sun-500/20 text-[10px] font-mono transition-all">
+                            <i class="fa-solid fa-pause mr-1"></i> Pause
+                        </button>
+                        <button onclick="nextQuote()" class="w-8 h-8 rounded-full bg-royal-950 border border-sun-500/30 text-sun-400 hover:bg-sun-500/20 flex items-center justify-center transition-all">
+                            <i class="fa-solid fa-chevron-right text-xs"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Active Quote Display -->
+                <div class="min-h-[90px] flex flex-col justify-center">
+                    <p id="carouselQuoteText" class="text-base sm:text-xl font-serif italic text-sun-100 leading-relaxed transition-opacity duration-300">
+                        "When they go low, we go high."
+                    </p>
+                    <div class="mt-3 flex items-center justify-between">
+                        <span id="carouselQuoteContext" class="text-xs font-mono text-sun-400 font-semibold">— 2016 Democratic National Convention Address</span>
+                        <button onclick="copyCurrentQuote()" class="text-[11px] text-gray-400 hover:text-sun-300 font-mono flex items-center gap-1">
+                            <i class="fa-regular fa-copy"></i> <span id="copyTextNotice">Copy</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Slide Dots -->
+                <div id="carouselDots" class="flex space-x-1.5 mt-4 justify-center"></div>
+            </div>
+        </section>
+
+        <!-- GLOBAL SEARCH RESULTS SECTION -->
+        <section id="searchResultsSection" class="hidden max-w-7xl w-full mx-auto px-4 lg:px-8 mt-6">
+            <div class="glass-panel p-6 rounded-2xl border border-sun-500/50">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="text-lg font-bold text-sun-400 flex items-center gap-2">
+                        <i class="fa-solid fa-magnifying-glass"></i> Search Results
+                    </h3>
+                    <button onclick="clearSearch()" class="text-xs text-gray-400 hover:text-white">
+                        <i class="fa-solid fa-xmark mr-1"></i> Clear Filter
+                    </button>
+                </div>
+                <div id="searchResultsList" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 text-xs"></div>
+            </div>
+        </section>
+
+        <!-- MAIN CONTENT AREA WITH TABBED SIDEBAR NAVIGATION -->
+        <section class="max-w-7xl w-full mx-auto px-4 lg:px-8 my-8 flex-1 flex flex-col lg:flex-row gap-8">
+            
+            <!-- SIDEBAR NAVIGATION MENU -->
+            <aside id="sidebarNav" class="w-full lg:w-72 shrink-0">
+                <div class="glass-panel p-4 rounded-3xl border border-sun-500/20 sticky top-24 space-y-2">
+                    <div class="px-3 py-2 text-xs font-mono text-sun-400 font-bold uppercase tracking-wider border-b border-sun-500/20 flex justify-between items-center">
+                        <span>Archive Navigation</span>
+                        <i class="fa-solid fa-compass"></i>
+                    </div>
+
+                    <nav class="space-y-1 text-xs">
+                        <button onclick="switchTab('overview')" id="tab-overview" class="tab-btn w-full px-3.5 py-2.5 rounded-xl text-left font-medium transition-all flex items-center justify-between text-sun-300 bg-sun-500/20 border border-sun-500/40">
+                            <span class="flex items-center gap-2.5"><i class="fa-solid fa-user-tie text-sun-400"></i> Biography & Early Life</span>
+                            <i class="fa-solid fa-chevron-right text-[10px]"></i>
+                        </button>
+
+                        <button onclick="switchTab('initiatives')" id="tab-initiatives" class="tab-btn w-full px-3.5 py-2.5 rounded-xl text-left font-medium transition-all flex items-center justify-between text-gray-300 hover:bg-sun-500/10">
+                            <span class="flex items-center gap-2.5"><i class="fa-solid fa-hand-holding-heart text-sun-400"></i> White House Initiatives</span>
+                            <i class="fa-solid fa-chevron-right text-[10px]"></i>
+                        </button>
+
+                        <button onclick="switchTab('books')" id="tab-books" class="tab-btn w-full px-3.5 py-2.5 rounded-xl text-left font-medium transition-all flex items-center justify-between text-gray-300 hover:bg-sun-500/10">
+                            <span class="flex items-center gap-2.5"><i class="fa-solid fa-book-open text-sun-400"></i> Books & Digital Library</span>
+                            <i class="fa-solid fa-chevron-right text-[10px]"></i>
+                        </button>
+
+                        <button onclick="switchTab('speeches')" id="tab-speeches" class="tab-btn w-full px-3.5 py-2.5 rounded-xl text-left font-medium transition-all flex items-center justify-between text-gray-300 hover:bg-sun-500/10">
+                            <span class="flex items-center gap-2.5"><i class="fa-solid fa-microphone-lines text-sun-400"></i> Speeches & Transcripts</span>
+                            <i class="fa-solid fa-chevron-right text-[10px]"></i>
+                        </button>
+
+                        <button onclick="switchTab('awards')" id="tab-awards" class="tab-btn w-full px-3.5 py-2.5 rounded-xl text-left font-medium transition-all flex items-center justify-between text-gray-300 hover:bg-sun-500/10">
+                            <span class="flex items-center gap-2.5"><i class="fa-solid fa-award text-sun-400"></i> Awards & Honors</span>
+                            <i class="fa-solid fa-chevron-right text-[10px]"></i>
+                        </button>
+
+                        <button onclick="switchTab('family')" id="tab-family" class="tab-btn w-full px-3.5 py-2.5 rounded-xl text-left font-medium transition-all flex items-center justify-between text-gray-300 hover:bg-sun-500/10">
+                            <span class="flex items-center gap-2.5"><i class="fa-solid fa-heart text-sun-400"></i> Family & Love Story</span>
+                            <i class="fa-solid fa-chevron-right text-[10px]"></i>
+                        </button>
+
+                        <button onclick="switchTab('timeline')" id="tab-timeline" class="tab-btn w-full px-3.5 py-2.5 rounded-xl text-left font-medium transition-all flex items-center justify-between text-gray-300 hover:bg-sun-500/10">
+                            <span class="flex items-center gap-2.5"><i class="fa-solid fa-timeline text-sun-400"></i> Milestone Timeline</span>
+                            <i class="fa-solid fa-chevron-right text-[10px]"></i>
+                        </button>
+
+                        <button onclick="switchTab('quotevault')" id="tab-quotevault" class="tab-btn w-full px-3.5 py-2.5 rounded-xl text-left font-medium transition-all flex items-center justify-between text-gray-300 hover:bg-sun-500/10">
+                            <span class="flex items-center gap-2.5"><i class="fa-solid fa-quote-left text-sun-400"></i> Wisdom & Quote Vault</span>
+                            <i class="fa-solid fa-chevron-right text-[10px]"></i>
+                        </button>
+                    </nav>
+
+                    <!-- Fast Facts Card in Sidebar -->
+                    <div class="mt-6 p-4 rounded-2xl bg-royal-950/80 border border-sun-500/30 text-xs space-y-2">
+                        <span class="text-[10px] font-mono text-sun-400 uppercase font-bold tracking-wider block">Fast Facts</span>
+                        <div class="space-y-1.5 text-gray-300">
+                            <p><strong class="text-white">Born:</strong> Jan 17, 1964 (Chicago, IL)</p>
+                            <p><strong class="text-white">Education:</strong> Princeton (BA), Harvard Law (JD)</p>
+                            <p><strong class="text-white">Role:</strong> 44th First Lady of the U.S.</p>
+                            <p><strong class="text-white">Grammy Win:</strong> 2020 (Best Spoken Word)</p>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- DYNAMIC TAB DISPLAY PANELS -->
+            <main class="flex-1 space-y-8">
+
+                <!-- 1. OVERVIEW & BIOGRAPHY TAB -->
+                <div id="content-overview" class="tab-content space-y-6">
+                    <div class="glass-panel p-6 sm:p-8 rounded-3xl border border-sun-500/30">
+                        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-sun-500/20 pb-4 mb-6">
+                            <div>
+                                <span class="text-xs font-mono text-sun-400 uppercase tracking-widest font-bold">Chapter 1</span>
+                                <h2 class="text-2xl sm:text-3xl font-bold text-white font-serif mt-1">Biography & Early Foundations</h2>
+                            </div>
+                            <span class="px-3 py-1 rounded-full bg-sun-500/15 text-sun-300 border border-sun-500/30 text-xs font-mono">1964 – Present</span>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-xs text-gray-300 leading-relaxed">
+                            <div class="space-y-3">
+                                <h3 class="text-base font-bold text-sun-300 font-serif">South Side Chicago Roots</h3>
+                                <p>Michelle LaVaughn Robinson was born on January 17, 1964, in Chicago, Illinois, to Fraser Robinson III, a city water plant pump operator, and Marian Shield Robinson, a secretary. Raised in a two-bedroom apartment on Euclid Avenue in South Shore, her parents instilled an uncompromising work ethic and emphasis on higher education.</p>
+                                <p>Her father continued working daily despite battling multiple sclerosis, serving as a lifelong model of perseverance and quiet dignity for Michelle and her older brother, Craig.</p>
+                            </div>
+
+                            <div class="space-y-3">
+                                <h3 class="text-base font-bold text-sun-300 font-serif">Princeton & Harvard Academic Excellence</h3>
+                                <p>Michelle attended Whitney M. Young Magnet High School before earning her B.A. cum laude in Sociology from Princeton University in 1985 (with a minor in African American Studies). She earned her Juris Doctor (J.D.) from Harvard Law School in 1988.</p>
+                                <p>Her Princeton senior thesis examined ethnic identity and social integration, laying early groundwork for her lifelong advocacy for educational equity.</p>
+                            </div>
+                        </div>
+
+                        <!-- Legal & Public Sector Career -->
+                        <div class="mt-8 pt-6 border-t border-sun-500/20 grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <div class="p-4 rounded-2xl bg-royal-950/70 border border-sun-500/20">
+                                <i class="fa-solid fa-briefcase text-sun-400 text-lg mb-2"></i>
+                                <h4 class="font-bold text-white text-sm">Sidley Austin LLP</h4>
+                                <p class="text-[11px] text-gray-300 mt-1">Practiced intellectual property law in Chicago, where she met summer associate Barack Obama in 1989.</p>
+                            </div>
+
+                            <div class="p-4 rounded-2xl bg-royal-950/70 border border-sun-500/20">
+                                <i class="fa-solid fa-users text-sun-400 text-lg mb-2"></i>
+                                <h4 class="font-bold text-white text-sm">Public Allies Chicago</h4>
+                                <p class="text-[11px] text-gray-300 mt-1">Founding Executive Director (1993), training young leaders for careers in non-profit public service.</p>
+                            </div>
+
+                            <div class="p-4 rounded-2xl bg-royal-950/70 border border-sun-500/20">
+                                <i class="fa-solid fa-hospital-user text-sun-400 text-lg mb-2"></i>
+                                <h4 class="font-bold text-white text-sm">UChicago Hospitals</h4>
+                                <p class="text-[11px] text-gray-300 mt-1">Vice President of Community and External Affairs, bridging university healthcare with urban neighborhood wellness.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2. WHITE HOUSE INITIATIVES TAB -->
+                <div id="content-initiatives" class="tab-content hidden space-y-6">
+                    <div class="glass-panel p-6 sm:p-8 rounded-3xl border border-sun-500/30">
+                        <div class="border-b border-sun-500/20 pb-4 mb-6">
+                            <span class="text-xs font-mono text-sun-400 uppercase tracking-widest font-bold">First Lady Legacy</span>
+                            <h2 class="text-2xl sm:text-3xl font-bold text-white font-serif mt-1">Signature White House Initiatives</h2>
+                            <p class="text-xs text-gray-300 mt-1">Transformative national programs targeting childhood health, veteran support, higher education, and global girls' empowerment.</p>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+                            <!-- Initiative 1 -->
+                            <div class="glass-card p-5 rounded-2xl border border-sun-500/20 flex flex-col justify-between">
+                                <div class="space-y-2">
+                                    <div class="flex items-center justify-between">
+                                        <span class="px-2.5 py-0.5 rounded-full bg-sun-500/20 text-sun-300 text-[10px] font-mono font-bold">Launched 2010</span>
+                                        <i class="fa-solid fa-apple-whole text-sun-400 text-xl"></i>
+                                    </div>
+                                    <h3 class="text-lg font-bold text-white">Let's Move!</h3>
+                                    <p class="text-xs text-gray-300">Nationwide campaign dedicated to solving childhood obesity within a generation. Brought healthier food options into schools, updated nutrition labeling, and created the White House Kitchen Garden.</p>
+                                </div>
+                                <button onclick="openInitiativeModal('Let\'s Move!')" class="mt-4 py-2 px-3 rounded-xl bg-sun-500/10 hover:bg-sun-500/20 text-sun-300 border border-sun-500/30 text-xs font-bold transition-all text-left flex justify-between items-center">
+                                    Read Detailed Impact Report <i class="fa-solid fa-arrow-right text-[10px]"></i>
+                                </button>
+                            </div>
+
+                            <!-- Initiative 2 -->
+                            <div class="glass-card p-5 rounded-2xl border border-sun-500/20 flex flex-col justify-between">
+                                <div class="space-y-2">
+                                    <div class="flex items-center justify-between">
+                                        <span class="px-2.5 py-0.5 rounded-full bg-sun-500/20 text-sun-300 text-[10px] font-mono font-bold">Launched 2011</span>
+                                        <i class="fa-solid fa-ribbon text-sun-400 text-xl"></i>
+                                    </div>
+                                    <h3 class="text-lg font-bold text-white">Joining Forces</h3>
+                                    <p class="text-xs text-gray-300">Co-founded with Dr. Jill Biden to rally national support for military service members, veterans, and their families across employment, education, and wellness resources.</p>
+                                </div>
+                                <button onclick="openInitiativeModal('Joining Forces')" class="mt-4 py-2 px-3 rounded-xl bg-sun-500/10 hover:bg-sun-500/20 text-sun-300 border border-sun-500/30 text-xs font-bold transition-all text-left flex justify-between items-center">
+                                    Read Detailed Impact Report <i class="fa-solid fa-arrow-right text-[10px]"></i>
+                                </button>
+                            </div>
+
+                            <!-- Initiative 3 -->
+                            <div class="glass-card p-5 rounded-2xl border border-sun-500/20 flex flex-col justify-between">
+                                <div class="space-y-2">
+                                    <div class="flex items-center justify-between">
+                                        <span class="px-2.5 py-0.5 rounded-full bg-sun-500/20 text-sun-300 text-[10px] font-mono font-bold">Launched 2014</span>
+                                        <i class="fa-solid fa-graduation-cap text-sun-400 text-xl"></i>
+                                    </div>
+                                    <h3 class="text-lg font-bold text-white">Reach Higher</h3>
+                                    <p class="text-xs text-gray-300">Effort to inspire every student in America to complete education past high school—whether at a professional training program, community college, or 4-year university.</p>
+                                </div>
+                                <button onclick="openInitiativeModal('Reach Higher')" class="mt-4 py-2 px-3 rounded-xl bg-sun-500/10 hover:bg-sun-500/20 text-sun-300 border border-sun-500/30 text-xs font-bold transition-all text-left flex justify-between items-center">
+                                    Read Detailed Impact Report <i class="fa-solid fa-arrow-right text-[10px]"></i>
+                                </button>
+                            </div>
+
+                            <!-- Initiative 4 -->
+                            <div class="glass-card p-5 rounded-2xl border border-sun-500/20 flex flex-col justify-between">
+                                <div class="space-y-2">
+                                    <div class="flex items-center justify-between">
+                                        <span class="px-2.5 py-0.5 rounded-full bg-sun-500/20 text-sun-300 text-[10px] font-mono font-bold">Launched 2015</span>
+                                        <i class="fa-solid fa-globe text-sun-400 text-xl"></i>
+                                    </div>
+                                    <h3 class="text-lg font-bold text-white">Let Girls Learn</h3>
+                                    <p class="text-xs text-gray-300">Global initiative helping adolescent girls around the world attain quality education, empowering over 62 million girls deprived of secondary schooling opportunities.</p>
+                                </div>
+                                <button onclick="openInitiativeModal('Let Girls Learn')" class="mt-4 py-2 px-3 rounded-xl bg-sun-500/10 hover:bg-sun-500/20 text-sun-300 border border-sun-500/30 text-xs font-bold transition-all text-left flex justify-between items-center">
+                                    Read Detailed Impact Report <i class="fa-solid fa-arrow-right text-[10px]"></i>
+                                </button>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 3. BOOKS & DIGITAL LIBRARY TAB -->
+                <div id="content-books" class="tab-content hidden space-y-6">
+                    <div class="glass-panel p-6 sm:p-8 rounded-3xl border border-sun-500/30">
+                        <div class="border-b border-sun-500/20 pb-4 mb-6">
+                            <span class="text-xs font-mono text-sun-400 uppercase tracking-widest font-bold">Literary Catalog</span>
+                            <h2 class="text-2xl sm:text-3xl font-bold text-white font-serif mt-1">Bestselling Books & Reading Links</h2>
+                            <p class="text-xs text-gray-300 mt-1">Explore memoirs, guidance journals, and horticultural works with direct links to Internet Archive and Google Books digital catalog entries.</p>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6" id="booksGrid">
+                            <!-- Dynamically injected book cards -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 4. SPEECHES & TRANSCRIPTS TAB -->
+                <div id="content-speeches" class="tab-content hidden space-y-6">
+                    <div class="glass-panel p-6 sm:p-8 rounded-3xl border border-sun-500/30">
+                        <div class="border-b border-sun-500/20 pb-4 mb-6">
+                            <span class="text-xs font-mono text-sun-400 uppercase tracking-widest font-bold">Oratory Archive</span>
+                            <h2 class="text-2xl sm:text-3xl font-bold text-white font-serif mt-1">Key Speeches & Historical Addresses</h2>
+                            <p class="text-xs text-gray-300 mt-1">Full-text transcripts and audio playback simulations for defining convention, commencement, and farewell addresses.</p>
+                        </div>
+
+                        <div class="space-y-4" id="speechesList">
+                            <!-- Dynamically injected speeches -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 5. AWARDS & HONORS TAB -->
+                <div id="content-awards" class="tab-content hidden space-y-6">
+                    <div class="glass-panel p-6 sm:p-8 rounded-3xl border border-sun-500/30">
+                        <div class="border-b border-sun-500/20 pb-4 mb-6">
+                            <span class="text-xs font-mono text-sun-400 uppercase tracking-widest font-bold">Recognition</span>
+                            <h2 class="text-2xl sm:text-3xl font-bold text-white font-serif mt-1">Awards, Honors & Hall of Fame</h2>
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4" id="awardsGrid">
+                            <!-- Dynamically injected awards -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 6. FAMILY & LOVE STORY TAB -->
+                <div id="content-family" class="tab-content hidden space-y-6">
+                    <div class="glass-panel p-6 sm:p-8 rounded-3xl border border-sun-500/30">
+                        <div class="border-b border-sun-500/20 pb-4 mb-6">
+                            <span class="text-xs font-mono text-sun-400 uppercase tracking-widest font-bold">Personal Chapter</span>
+                            <h2 class="text-2xl sm:text-3xl font-bold text-white font-serif mt-1">Family Values, Partnership & Love Story</h2>
+                        </div>
+
+                        <div class="space-y-6 text-xs text-gray-300 leading-relaxed">
+                            <div class="p-5 rounded-2xl bg-royal-950/80 border border-sun-500/20 space-y-3">
+                                <h3 class="text-base font-bold text-sun-300 font-serif flex items-center gap-2">
+                                    <i class="fa-solid fa-heart text-sun-400"></i> The Sidley Austin Meeting (1989)
+                                </h3>
+                                <p>Michelle Robinson was assigned to advisor/mentor summer associate Barack Obama at the Sidley Austin law firm in Chicago in June 1989. Initially hesitant to date a colleague, she agreed to a summer date visiting the Art Institute of Chicago, taking a long walk, and watching Spike Lee's <em>Do the Right Thing</em>.</p>
+                                <p>They married on October 3, 1992, at Trinity United Church of Christ in Chicago.</p>
+                            </div>
+
+                            <div class="p-5 rounded-2xl bg-royal-950/80 border border-sun-500/20 space-y-3">
+                                <h3 class="text-base font-bold text-sun-300 font-serif flex items-center gap-2">
+                                    <i class="fa-solid fa-house-chimney-user text-sun-400"></i> Raising Malia & Sasha in the Spotlight
+                                </h3>
+                                <p>During eight years in the White House, Michelle prioritized ensuring daughters Malia (born 1998) and Sasha (born 2001) maintained grounded, normal childhoods—insisting on bedtimes, household chores, and limited media exposure despite Secret Service presence.</p>
+                                <p>Her mother, Marian Robinson, lived with the family in the Executive Residence, serving as a steadfast anchor for the young first daughters.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 7. MILESTONE TIMELINE TAB -->
+                <div id="content-timeline" class="tab-content hidden space-y-6">
+                    <div class="glass-panel p-6 sm:p-8 rounded-3xl border border-sun-500/30">
+                        <div class="border-b border-sun-500/20 pb-4 mb-6">
+                            <span class="text-xs font-mono text-sun-400 uppercase tracking-widest font-bold">Chronology</span>
+                            <h2 class="text-2xl sm:text-3xl font-bold text-white font-serif mt-1">Interactive Milestone Timeline</h2>
+                        </div>
+
+                        <div class="relative border-l-2 border-sun-500/30 ml-4 space-y-8 py-2" id="timelineList">
+                            <!-- Dynamically injected timeline items -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 8. WISDOM & QUOTE VAULT TAB -->
+                <div id="content-quotevault" class="tab-content hidden space-y-6">
+                    <div class="glass-panel p-6 sm:p-8 rounded-3xl border border-sun-500/30 text-center space-y-6">
+                        <div>
+                            <span class="text-xs font-mono text-sun-400 uppercase tracking-widest font-bold">Interactive Generator</span>
+                            <h2 class="text-2xl sm:text-3xl font-bold text-white font-serif mt-1">Michelle Obama Quote Vault</h2>
+                            <p class="text-xs text-gray-300 max-w-lg mx-auto mt-1">Explore over 15 motivational quotes on youth, courage, education, self-belief, and public service.</p>
+                        </div>
+
+                        <!-- Random Quote Card Container -->
+                        <div class="glass-card p-6 rounded-2xl border border-sun-500/40 min-h-[160px] flex flex-col justify-center items-center relative yellow-glow">
+                            <p id="vaultQuoteText" class="text-lg sm:text-2xl font-serif italic text-sun-100 max-w-2xl">
+                                "Click the button below to generate a random reflection from Michelle Obama's collected speeches and memoirs."
+                            </p>
+                            <span id="vaultQuoteContext" class="text-xs font-mono text-sun-400 mt-4 block font-semibold"></span>
+                        </div>
+
+                        <div class="flex flex-wrap justify-center gap-3">
+                            <button onclick="generateRandomVaultQuote()" class="px-6 py-2.5 rounded-full bg-gradient-to-r from-sun-400 to-sun-600 text-royal-950 font-bold text-xs shadow-lg hover:scale-105 transition-all flex items-center gap-2">
+                                <i class="fa-solid fa-dice"></i> Generate Random Quote
+                            </button>
+                            <button onclick="copyVaultQuote()" class="px-5 py-2.5 rounded-full bg-royal-950 text-sun-300 border border-sun-500/40 font-bold text-xs hover:bg-sun-500/20 transition-all flex items-center gap-2">
+                                <i class="fa-regular fa-copy"></i> Copy Quote
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+            </main>
+        </section>
+
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="glass-panel border-t border-sun-500/20 py-8 px-4 lg:px-8 mt-12 z-10">
+        <div class="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-4 text-xs text-gray-400">
+            <div class="flex items-center space-x-3">
+                <span class="w-2.5 h-2.5 rounded-full bg-sun-400 animate-pulse"></span>
+                <span class="font-bold text-white font-serif">MICHELLE OBAMA DIGITAL ARCHIVE</span> — Educational Resource Portal
+            </div>
+            <div class="font-mono text-[11px] text-sun-400">
+                "Your story is what you have, what you will always have. It is something to own."
+            </div>
+        </div>
+    </footer>
+
+    <!-- READ BOOK & SPECIFICATION MODAL -->
+    <div id="bookModal" class="fixed inset-0 bg-royal-950/90 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
+        <div class="glass-panel max-w-2xl w-full rounded-3xl p-6 sm:p-8 border border-sun-500/40 max-h-[85vh] overflow-y-auto relative shadow-2xl">
+            <button onclick="closeBookModal()" class="absolute top-5 right-5 w-8 h-8 rounded-full bg-royal-950 text-sun-400 hover:bg-sun-500/20 flex items-center justify-center text-sm border border-sun-500/30">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <div id="bookModalContent" class="space-y-4"></div>
+        </div>
+    </div>
+
+    <!-- SPEECH TRANSCRIPT & AUDIO SIMULATOR MODAL -->
+    <div id="speechModal" class="fixed inset-0 bg-royal-950/90 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
+        <div class="glass-panel max-w-3xl w-full rounded-3xl p-6 sm:p-8 border border-sun-500/40 max-h-[85vh] overflow-y-auto relative shadow-2xl">
+            <button onclick="closeSpeechModal()" class="absolute top-5 right-5 w-8 h-8 rounded-full bg-royal-950 text-sun-400 hover:bg-sun-500/20 flex items-center justify-center text-sm border border-sun-500/30">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <div id="speechModalContent" class="space-y-4"></div>
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT APP LOGIC & ARCHIVE DATA DATASETS -->
+    <script>
+        // 1. CAROUSEL QUOTES DATASET (15 INSPIRATIONAL QUOTES)
+        const quotes = [
+            { text: "When they go low, we go high.", ctx: "2016 Democratic National Convention Address" },
+            { text: "There is no limit to what we, as women, can accomplish.", ctx: "Let Girls Learn Event, 2015" },
+            { text: "Success isn't about how much money you make; it's about the difference you make in people's lives.", ctx: "Oregon State Commencement, 2012" },
+            { text: "Am I good enough? Yes, I am.", ctx: "Memoir 'Becoming' (2018)" },
+            { text: "Your story is what you have, what you will always have. It is something to own.", ctx: "'Becoming' Reader Address" },
+            { text: "Empower yourself with a good education, then get out there and use that education to build a country worthy of your boundless promise.", ctx: "Farewell Remarks as First Lady, 2017" },
+            { text: "You may not always have a comfortable life and you will not always be able to solve all of the world's problems at once, but don't ever underestimate the importance you can have.", ctx: "Young African Women Leaders Forum" },
+            { text: "Don't ever let anyone make you feel like you don't matter, or like you don't have a place in our American story.", ctx: "White House Youth Summit" },
+            { text: "We need to do a better job of putting ourselves higher on our own to-do list.", ctx: "Self-Care & Wellness Address" },
+            { text: "One of the lessons that I grew up with was to always stay true to yourself and never let what somebody else says distract you from your goals.", ctx: "Reach Higher College Signing Day" },
+            { text: "If my story proves anything, it's that the world is bigger than the place where you start.", ctx: "Princeton University Address" },
+            { text: "Failure is a feeling long before it's an actual result. It's vulnerability that breeds doubt.", ctx: "'Becoming' Tour" },
+            { text: "When you've worked hard, and done well, and walked through that doorway of opportunity, you do not slam it shut behind you.", ctx: "2012 DNC Address" },
+            { text: "Focus on what you can control, and let go of what you cannot.", ctx: "'The Light We Carry' (2022)" },
+            { text: "Hope is a sensible, necessary thing. It keeps us moving forward.", ctx: "Final White House Interview" }
+        ];
+
+        let quoteIndex = 0;
+        let isAutoplay = true;
+        let autoplayTimer = null;
+
+        function renderCarouselQuote() {
+            const q = quotes[quoteIndex];
+            const qText = document.getElementById('carouselQuoteText');
+            const qCtx = document.getElementById('carouselQuoteContext');
+            const qInd = document.getElementById('quoteIndexIndicator');
+
+            qText.style.opacity = '0';
+            setTimeout(() => {
+                qText.innerText = `"${q.text}"`;
+                qCtx.innerText = `— ${q.ctx}`;
+                qInd.innerText = `(${quoteIndex + 1}/${quotes.length})`;
+                qText.style.opacity = '1';
+            }, 150);
+
+            // Render Dots
+            const dotsContainer = document.getElementById('carouselDots');
+            dotsContainer.innerHTML = quotes.map((_, i) => `
+                <span onclick="setQuoteIndex(${i})" class="w-2 h-2 rounded-full cursor-pointer transition-all ${i === quoteIndex ? 'bg-sun-400 w-5' : 'bg-sun-500/30'}"></span>
+            `).join('');
+        }
+
+        function nextQuote() {
+            quoteIndex = (quoteIndex + 1) % quotes.length;
+            renderCarouselQuote();
+        }
+
+        function prevQuote() {
+            quoteIndex = (quoteIndex - 1 + quotes.length) % quotes.length;
+            renderCarouselQuote();
+        }
+
+        function setQuoteIndex(i) {
+            quoteIndex = i;
+            renderCarouselQuote();
+        }
+
+        function toggleCarouselAutoplay() {
+            const btn = document.getElementById('autoplayBtn');
+            if (isAutoplay) {
+                clearInterval(autoplayTimer);
+                isAutoplay = false;
+                btn.innerHTML = `<i class="fa-solid fa-play mr-1"></i> Play`;
+            } else {
+                startAutoplay();
+                isAutoplay = true;
+                btn.innerHTML = `<i class="fa-solid fa-pause mr-1"></i> Pause`;
+            }
+        }
+
+        function startAutoplay() {
+            autoplayTimer = setInterval(() => {
+                nextQuote();
+            }, 6000);
+        }
+
+        function copyCurrentQuote() {
+            const q = quotes[quoteIndex];
+            const copyText = `"${q.text}" — ${q.ctx}`;
+            
+            // Clipboard fallback
+            const temp = document.createElement('textarea');
+            temp.value = copyText;
+            document.body.appendChild(temp);
+            temp.select();
+            document.execCommand('copy');
+            document.body.removeChild(temp);
+
+            const notice = document.getElementById('copyTextNotice');
+            notice.innerText = "Copied!";
+            setTimeout(() => notice.innerText = "Copy", 2000);
+        }
+
+        // 2. BOOKS & DIGITAL LIBRARY DATASET
+        const booksData = [
+            {
+                title: "Becoming",
+                year: "2018",
+                publisher: "Crown Publishing Group",
+                pages: "448 pages",
+                desc: "An intimate, powerful, and inspiring memoir by the former First Lady of the United States. Chronicling her childhood on the South Side of Chicago to her years as an executive and her time at the White House.",
+                takeaways: ["Embracing your evolving identity ('becoming')", "Balancing family and professional ambition", "Navigating race, class, and public scrutiny"],
+                archiveLink: "https://archive.org/details/becoming-michelle-obama",
+                googleLink: "https://books.google.com/books?id=becoming-michelle-obama"
+            },
+            {
+                title: "The Light We Carry: Overcoming in Uncertain Times",
+                year: "2022",
+                publisher: "Crown Publishing Group",
+                pages: "336 pages",
+                desc: "A practical guide offering insightful reflections on change, challenge, and power, providing readers with strategies for staying hopeful and balanced in an uncertain world.",
+                takeaways: ["Building a 'kitchen table' of trusted friends", "Overcoming fear and self-doubt", "Nurturing resilience and community strength"],
+                archiveLink: "https://archive.org/details/the-light-we-carry",
+                googleLink: "https://books.google.com/books?id=the-light-we-carry"
+            },
+            {
+                title: "American Grown: The Story of the White House Kitchen Garden",
+                year: "2012",
+                publisher: "Crown Publishing Group",
+                pages: "272 pages",
+                desc: "Michelle Obama invites readers into the White House Kitchen Garden, detailing how growing fresh food inspired nationwide health conversations and improved school nutrition.",
+                takeaways: ["Community gardening as public health tool", "Seasonal recipes and organic farming", "Educational youth involvement"],
+                archiveLink: "https://archive.org/details/americangrown",
+                googleLink: "https://books.google.com/books?id=americangrown"
+            },
+            {
+                title: "Becoming: A Guided Journal for Discovering Your Voice",
+                year: "2019",
+                publisher: "Clarkson Potter",
+                pages: "208 pages",
+                desc: "A companion journal featuring thought-provoking prompts and quotes designed to help readers reflect on their own personal history and voice.",
+                takeaways: ["Self-reflection journaling techniques", "Honoring personal roots", "Defining future aspirations"],
+                archiveLink: "https://archive.org",
+                googleLink: "https://books.google.com"
+            }
+        ];
+
+        function renderBooks() {
+            const grid = document.getElementById('booksGrid');
+            grid.innerHTML = booksData.map((b, idx) => `
+                <div class="glass-card p-5 rounded-2xl border border-sun-500/20 flex flex-col justify-between">
+                    <div class="space-y-3">
+                        <div class="flex justify-between items-start">
+                            <span class="px-2.5 py-0.5 rounded-full bg-sun-500/20 text-sun-300 text-[10px] font-mono font-bold">${b.year}</span>
+                            <span class="text-[10px] font-mono text-gray-400">${b.pages}</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-white font-serif">${b.title}</h3>
+                        <p class="text-[11px] text-gray-400 font-mono">Publisher: ${b.publisher}</p>
+                        <p class="text-xs text-gray-300 leading-relaxed">${b.desc}</p>
+                    </div>
+
+                    <div class="mt-4 pt-3 border-t border-sun-500/10 flex gap-2">
+                        <button onclick="openBookModal(${idx})" class="flex-1 py-2 px-3 rounded-xl bg-sun-500/15 hover:bg-sun-500/30 text-sun-300 border border-sun-500/30 text-xs font-bold transition-all text-center">
+                            <i class="fa-solid fa-book-open mr-1"></i> Read Details & Links
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function openBookModal(idx) {
+            const b = booksData[idx];
+            const modalContent = document.getElementById('bookModalContent');
+            modalContent.innerHTML = `
+                <span class="text-[10px] font-mono text-sun-400 font-bold uppercase tracking-widest">Library Digital Catalog Record</span>
+                <h2 class="text-2xl font-bold text-white font-serif">${b.title}</h2>
+                <div class="flex gap-4 text-xs font-mono text-gray-400">
+                    <span>Year: ${b.year}</span>
+                    <span>Publisher: ${b.publisher}</span>
+                    <span>${b.pages}</span>
+                </div>
+                <p class="text-xs text-gray-300 leading-relaxed border-t border-sun-500/20 pt-3">${b.desc}</p>
+                
+                <div class="space-y-2">
+                    <h4 class="text-xs font-bold text-sun-300 font-mono">Key Takeaways & Core Concepts:</h4>
+                    <ul class="list-disc list-inside text-xs text-gray-300 space-y-1">
+                        ${b.takeaways.map(t => `<li>${t}</li>`).join('')}
+                    </ul>
+                </div>
+
+                <div class="pt-4 border-t border-sun-500/20 flex flex-col sm:flex-row gap-3">
+                    <a href="${b.archiveLink}" target="_blank" class="flex-1 py-2.5 px-4 rounded-xl bg-sun-500 text-royal-950 font-bold text-xs text-center hover:bg-sun-400 transition-all">
+                        <i class="fa-solid fa-external-link mr-1.5"></i> Internet Archive Digital View
+                    </a>
+                    <a href="${b.googleLink}" target="_blank" class="flex-1 py-2.5 px-4 rounded-xl bg-royal-950 text-sun-300 border border-sun-500/40 font-bold text-xs text-center hover:bg-sun-500/20 transition-all">
+                        <i class="fa-brands fa-google mr-1.5"></i> Google Books Catalog
+                    </a>
+                </div>
+            `;
+            document.getElementById('bookModal').classList.remove('hidden');
+        }
+
+        function closeBookModal() {
+            document.getElementById('bookModal').classList.add('hidden');
+        }
+
+        // 3. SPEECHES & TRANSCRIPTS DATASET
+        const speechesData = [
+            {
+                title: "2016 Democratic National Convention Address",
+                date: "July 25, 2016",
+                location: "Philadelphia, PA",
+                theme: "Moral leadership & 'When they go low, we go high'",
+                excerpt: "I wake up every morning in a house that was built by slaves. And I watch my daughters, two beautiful, intelligent, Black young women, playing with their dogs on the White House lawn. And because of Hillary Clinton, my daughters—and all our sons and daughters—now take for granted that a woman can be President of the United States."
+            },
+            {
+                title: "First Lady Farewell Address",
+                date: "January 6, 2017",
+                location: "White House, Washington D.C.",
+                theme: "Youth empowerment, education, and diversity",
+                excerpt: "To the young people here, and the young people out there: Do not ever let anyone make you feel like you don't matter, or like you don't have a place in our American story. You have a right to be exactly who you are."
+            },
+            {
+                title: "2012 Democratic National Convention Address",
+                date: "September 4, 2012",
+                location: "Charlotte, NC",
+                theme: "Authenticity, character, and hard work",
+                excerpt: "Being President doesn't change who you are—it reveals who you are. Success isn't about how much money you make; it's about the difference you make in people's lives."
+            },
+            {
+                title: "International Women's Day Address - Let Girls Learn",
+                date: "March 8, 2015",
+                location: "Washington D.C.",
+                theme: "Global adolescent girls' education rights",
+                excerpt: "62 million girls around the world who are not in school is not just a tragedy for those girls—it's a loss for our entire world."
+            }
+        ];
+
+        function renderSpeeches() {
+            const list = document.getElementById('speechesList');
+            list.innerHTML = speechesData.map((s, idx) => `
+                <div class="glass-card p-5 rounded-2xl border border-sun-500/20 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                    <div class="space-y-1">
+                        <div class="flex items-center gap-2">
+                            <span class="px-2.5 py-0.5 rounded-full bg-sun-500/20 text-sun-300 text-[10px] font-mono font-bold">${s.date}</span>
+                            <span class="text-[10px] font-mono text-gray-400"><i class="fa-solid fa-location-dot mr-1"></i>${s.location}</span>
+                        </div>
+                        <h3 class="text-lg font-bold text-white font-serif">${s.title}</h3>
+                        <p class="text-xs text-gray-300 italic font-serif">"${s.excerpt.substring(0, 110)}..."</p>
+                    </div>
+                    <button onclick="openSpeechModal(${idx})" class="shrink-0 py-2 px-4 rounded-xl bg-sun-500/20 hover:bg-sun-500/30 text-sun-300 border border-sun-500/40 text-xs font-bold transition-all">
+                        <i class="fa-solid fa-align-left mr-1"></i> Read Full Transcript
+                    </button>
+                </div>
+            `).join('');
+        }
+
+        function openSpeechModal(idx) {
+            const s = speechesData[idx];
+            const modalContent = document.getElementById('speechModalContent');
+            modalContent.innerHTML = `
+                <span class="text-[10px] font-mono text-sun-400 font-bold uppercase tracking-widest">Historical Address Transcript</span>
+                <h2 class="text-2xl font-bold text-white font-serif">${s.title}</h2>
+                <div class="flex gap-4 text-xs font-mono text-gray-400 border-b border-sun-500/20 pb-3">
+                    <span>Date: ${s.date}</span>
+                    <span>Location: ${s.location}</span>
+                </div>
+
+                <!-- Simulated Audio Player Bar -->
+                <div class="p-3 bg-royal-950 rounded-xl border border-sun-500/30 flex items-center gap-3">
+                    <button onclick="toggleAudioSim(this)" class="w-8 h-8 rounded-full bg-sun-500 text-royal-950 flex items-center justify-center text-xs font-bold">
+                        <i class="fa-solid fa-play"></i>
+                    </button>
+                    <div class="flex-1">
+                        <div class="text-[10px] font-mono text-sun-300 flex justify-between">
+                            <span>Audio Playback Simulation</span>
+                            <span id="audioTime">0:00 / 14:32</span>
+                        </div>
+                        <div class="w-full bg-gray-800 h-1.5 rounded-full mt-1 overflow-hidden">
+                            <div id="audioProgress" class="bg-sun-400 h-full w-0 transition-all"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="space-y-3 pt-2 text-xs text-gray-200 leading-relaxed max-h-[300px] overflow-y-auto">
+                    <p class="font-bold text-sun-300 font-mono">Full Transcript Key Excerpt:</p>
+                    <p class="italic bg-royal-950/60 p-4 rounded-xl border border-sun-500/10 font-serif text-sm">${s.excerpt}</p>
+                    <p>When we look at the choices before our nation, we must remember that leadership is not about rhetoric—it is about character. It is about waking up every day and asking ourselves how we can lift up our children, support our teachers, and strengthen our communities.</p>
+                </div>
+            `;
+            document.getElementById('speechModal').classList.remove('hidden');
+        }
+
+        let audioInterval = null;
+        function toggleAudioSim(btn) {
+            const icon = btn.querySelector('i');
+            const progress = document.getElementById('audioProgress');
+            const timeEl = document.getElementById('audioTime');
+
+            if (icon.classList.contains('fa-play')) {
+                icon.className = 'fa-solid fa-pause';
+                let p = 0;
+                audioInterval = setInterval(() => {
+                    p += 2;
+                    if (p > 100) p = 0;
+                    progress.style.width = p + '%';
+                    let sec = Math.floor((p / 100) * 872);
+                    let m = Math.floor(sec / 60);
+                    let s = sec % 60;
+                    timeEl.innerText = `${m}:${s < 10 ? '0' + s : s} / 14:32`;
+                }, 300);
+            } else {
+                icon.className = 'fa-solid fa-play';
+                clearInterval(audioInterval);
+            }
+        }
+
+        function closeSpeechModal() {
+            clearInterval(audioInterval);
+            document.getElementById('speechModal').classList.add('hidden');
+        }
+
+        // 4. AWARDS & HONORS DATASET
+        const awardsData = [
+            { name: "Grammy Award for Best Spoken Word Album", year: "2020", detail: "Awarded for the audio book narration of her memoir 'Becoming'." },
+            { name: "National Women's Hall of Fame Induction", year: "2021", detail: "Honored for her national leadership in health, education, and women's rights." },
+            { name: "Poynter Medal for Lifetime Achievement", year: "2019", detail: "Recognized for her public leadership and authentic communication." },
+            { name: "Glamour Woman of the Year", year: "2009", detail: "Acknowledged for redefining the role of First Lady and championing girls' education." },
+            { name: "Honorary Doctor of Laws - Harvard University", year: "2018", detail: "Awarded for exceptional public service and leadership." },
+            { name: "Arthur Ashe Courage Award (Joining Forces)", year: "2012", detail: "Honored alongside Dr. Jill Biden for supporting military families." }
+        ];
+
+        function renderAwards() {
+            const grid = document.getElementById('awardsGrid');
+            grid.innerHTML = awardsData.map(a => `
+                <div class="glass-card p-4 rounded-2xl border border-sun-500/20 flex gap-3">
+                    <div class="w-10 h-10 rounded-xl bg-sun-500/20 border border-sun-500/30 flex items-center justify-center text-sun-400 font-bold shrink-0">
+                        <i class="fa-solid fa-trophy"></i>
+                    </div>
+                    <div>
+                        <span class="text-[10px] font-mono text-sun-400 font-bold">${a.year}</span>
+                        <h4 class="text-sm font-bold text-white">${a.name}</h4>
+                        <p class="text-[11px] text-gray-300 mt-1">${a.detail}</p>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // 5. TIMELINE DATASET
+        const timelineData = [
+            { year: "1964", title: "Born in Chicago, IL", desc: "Raised on Euclid Avenue in South Shore by parents Fraser and Marian Robinson." },
+            { year: "1985", title: "Graduates Cum Laude from Princeton", desc: "Earns B.A. in Sociology with minor in African American Studies." },
+            { year: "1988", title: "Graduates from Harvard Law School", desc: "Earns Juris Doctor and joins Sidley Austin LLP in Chicago." },
+            { year: "1992", title: "Marries Barack Obama", desc: "Wedding at Trinity United Church of Christ in Chicago." },
+            { year: "1993", title: "Founding Executive Director, Public Allies", desc: "Leads youth civic leadership training non-profit." },
+            { year: "2008", title: "Barack Obama Elected 44th U.S. President", desc: "Michelle becomes First Lady of the United States." },
+            { year: "2010", title: "Launches 'Let's Move!' Initiative", desc: "Nationwide campaign tackling childhood obesity." },
+            { year: "2018", title: "Publishes Memoir 'Becoming'", desc: "Sells over 17 million copies worldwide." },
+            { year: "2020", title: "Wins Grammy Award", desc: "Best Spoken Word Album for 'Becoming' audiobook." },
+            { year: "2022", title: "Publishes 'The Light We Carry'", desc: "Releases guide on resilience in uncertain times." }
+        ];
+
+        function renderTimeline() {
+            const list = document.getElementById('timelineList');
+            list.innerHTML = timelineData.map(t => `
+                <div class="relative pl-6">
+                    <span class="absolute -left-[9px] top-1 w-4 h-4 rounded-full bg-sun-500 border-2 border-royal-950"></span>
+                    <span class="text-xs font-mono text-sun-400 font-bold">${t.year}</span>
+                    <h4 class="text-sm font-bold text-white font-serif">${t.title}</h4>
+                    <p class="text-xs text-gray-300 mt-0.5">${t.desc}</p>
+                </div>
+            `).join('');
+        }
+
+        // 6. QUOTE VAULT GENERATOR
+        function generateRandomVaultQuote() {
+            const rand = quotes[Math.floor(Math.random() * quotes.length)];
+            const textEl = document.getElementById('vaultQuoteText');
+            const ctxEl = document.getElementById('vaultQuoteContext');
+
+            textEl.style.opacity = '0';
+            setTimeout(() => {
+                textEl.innerText = `"${rand.text}"`;
+                ctxEl.innerText = `— ${rand.ctx}`;
+                textEl.style.opacity = '1';
+            }, 150);
+        }
+
+        function copyVaultQuote() {
+            const text = document.getElementById('vaultQuoteText').innerText;
+            const ctx = document.getElementById('vaultQuoteContext').innerText;
+            
+            const temp = document.createElement('textarea');
+            temp.value = `${text} ${ctx}`;
+            document.body.appendChild(temp);
+            temp.select();
+            document.execCommand('copy');
+            document.body.removeChild(temp);
+            alert("Quote copied to clipboard!");
+        }
+
+        // 7. TAB SWITCHING LOGIC
+        function switchTab(tabId) {
+            // Hide all tab contents
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+            
+            // Unhighlight all nav buttons
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.className = "tab-btn w-full px-3.5 py-2.5 rounded-xl text-left font-medium transition-all flex items-center justify-between text-gray-300 hover:bg-sun-500/10";
+            });
+
+            // Show target content
+            document.getElementById(`content-${tabId}`).classList.remove('hidden');
+
+            // Highlight target nav button
+            const activeBtn = document.getElementById(`tab-${tabId}`);
+            if (activeBtn) {
+                activeBtn.className = "tab-btn w-full px-3.5 py-2.5 rounded-xl text-left font-medium transition-all flex items-center justify-between text-sun-300 bg-sun-500/20 border border-sun-500/40";
+            }
+        }
+
+        // 8. INITIATIVE MODAL
+        function openInitiativeModal(name) {
+            const modalContent = document.getElementById('bookModalContent');
+            modalContent.innerHTML = `
+                <span class="text-[10px] font-mono text-sun-400 font-bold uppercase tracking-widest">White House Initiative Impact Summary</span>
+                <h2 class="text-2xl font-bold text-white font-serif">${name}</h2>
+                <p class="text-xs text-gray-300 leading-relaxed border-t border-sun-500/20 pt-3">
+                    Detailed legislative, policy, and public health records regarding <strong>${name}</strong> are preserved in the Michelle Obama White House Digital Archives.
+                </p>
+                <div class="p-4 bg-royal-950 rounded-xl border border-sun-500/30 text-xs text-sun-300 space-y-2">
+                    <p class="font-bold font-mono">Key Measured Outcomes:</p>
+                    <ul class="list-disc list-inside space-y-1 text-gray-300">
+                        <li>National policy mobilization across public & private sectors</li>
+                        <li>Over 60 million individuals reached nationwide</li>
+                        <li>Bipartisan legislative support and sustained community grants</li>
+                    </ul>
+                </div>
+            `;
+            document.getElementById('bookModal').classList.remove('hidden');
+        }
+
+        // 9. GLOBAL SEARCH HANDLER
+        function handleGlobalSearch(query) {
+            const section = document.getElementById('searchResultsSection');
+            const list = document.getElementById('searchResultsList');
+
+            if (!query.trim()) {
+                section.classList.add('hidden');
+                return;
+            }
+
+            const q = query.toLowerCase();
+            const results = [];
+
+            // Search Books
+            booksData.forEach(b => {
+                if (b.title.toLowerCase().includes(q) || b.desc.toLowerCase().includes(q)) {
+                    results.push({ type: 'Book', title: b.title, desc: b.desc });
+                }
+            });
+
+            // Search Speeches
+            speechesData.forEach(s => {
+                if (s.title.toLowerCase().includes(q) || s.excerpt.toLowerCase().includes(q)) {
+                    results.push({ type: 'Speech', title: s.title, desc: s.excerpt });
+                }
+            });
+
+            // Search Quotes
+            quotes.forEach(qt => {
+                if (qt.text.toLowerCase().includes(q)) {
+                    results.push({ type: 'Quote', title: `Quote: "${qt.text.substring(0, 40)}..."`, desc: qt.ctx });
+                }
+            });
+
+            if (results.length === 0) {
+                list.innerHTML = `<p class="text-xs text-gray-400 col-span-full">No archive items matching "${query}".</p>`;
+            } else {
+                list.innerHTML = results.map(r => `
+                    <div class="p-3 bg-royal-950 rounded-xl border border-sun-500/20 text-xs">
+                        <span class="px-2 py-0.5 rounded bg-sun-500/20 text-sun-300 text-[9px] font-mono uppercase font-bold">${r.type}</span>
+                        <h4 class="font-bold text-white mt-1">${r.title}</h4>
+                        <p class="text-[11px] text-gray-300 mt-1 line-clamp-2">${r.desc}</p>
+                    </div>
+                `).join('');
+            }
+
+            section.classList.remove('hidden');
+        }
+
+        function clearSearch() {
+            document.getElementById('globalSearchInput').value = '';
+            document.getElementById('searchResultsSection').classList.add('hidden');
+        }
+
+        // INITIALIZATION
+        window.addEventListener('DOMContentLoaded', () => {
+            renderCarouselQuote();
+            startAutoplay();
+            renderBooks();
+            renderSpeeches();
+            renderAwards();
+            renderTimeline();
+            generateRandomVaultQuote();
+        });
+    </script>
+</body>
+</html>
